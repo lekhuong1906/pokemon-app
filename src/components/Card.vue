@@ -1,13 +1,18 @@
 <template>
-    <div class="card">
+    <div class="card" :class="{ disabled: isDisbaled }" :style="{
+        height: `${(920 - 16 * 4) / Math.sqrt(cardsContext.length) - 16}px`,
+        width: `${((920 - 16 * 4) / Math.sqrt(cardsContext.length) - 16) * 3 / 4}px`,
+        perspective: `${(((920 - 16 * 4) / Math.sqrt(cardsContext.length) - 16) * 3 / 4) * 2}px`
+    }">
         <div class="card__inner" :class="{ 'is-flipped': isFlipped }" @click="onToggleFlipCard">
             <div class="card__face card__face--front">
                 <div class="card__content"></div>
             </div>
             <div class="card__face card__face--back">
                 <div class="card__content" :style="{
-                    backgroundImage: `url('../assets/${imgBackFaceUrl}')`,
-                }">
+                    backgroundImage: `url(src/assets/${imgBackFaceUrl})`,
+                }
+                    ">
                 </div>
             </div>
         </div>
@@ -18,22 +23,44 @@
 
 export default {
     props: {
+        card: {
+            type: [String, Number, Array, Object],
+            requied: true,
+        },
         imgBackFaceUrl: {
             type: String,
             required: true,
+        },
+        cardsContext: {
+            type: String,
+            requied: true,
+            default: () => {
+                return [];
+            }
         }
     },
     data() {
         return {
+            isDisbaled: false,
             isFlipped: false,
-
         }
     },
     methods: {
         onToggleFlipCard() {
-            console.log(this.isFlipped);
+            if (this.isDisbaled) {
+                return false;
+            }
             this.isFlipped = !this.isFlipped;
+            if (this.isFlipped) {
+                this.$emit('onFlip', this.card)
+            }
         },
+        onFlipBackCard() {
+            this.isFlipped = false;
+        },
+        onEnabledDisabledMode() {
+            this.isDisbaled = true;
+        }
     }
 }
 </script>
@@ -90,5 +117,9 @@ export default {
     background-repeat: no-repeat;
     height: 100%;
     width: 100%;
+}
+
+.card.disabled .card__inner {
+    cursor: default;
 }
 </style>

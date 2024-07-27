@@ -1,12 +1,15 @@
 <template>
-  <main-screen v-if="statusMatch == 'default'" @onStart="onHandleBeforeStart($event)"></main-screen>
-  <interact-screen v-if="statusMatch == 'match'" :cardsContext="settings.cardsContext">
-  </interact-screen>
+  <main-screen v-if="statusMatch == 'default'" @onStart="onHandleBeforeStart($event)" />
+  <interact-screen v-if="statusMatch == 'match'" :cardsContext="settings.cardsContext" @onFinish="onGetResult" />
+  <result-screen v-if="statusMatch == 'result'" :timer="timer" @onStartAgain="statusMatch = 'default'" />
+  <copy-right-screen />
 </template>
 
 <script>
 import MainScreen from "./components/MainScreen.vue";
 import InteractScreen from './components/InteractScreen.vue';
+import ResultScreen from "./components/ResultScreen.vue"; 
+import CopyRightScreen from "./components/CopyRightScreen.vue";
 import { shuffled } from './utils/array.js'
 
 export default {
@@ -19,11 +22,14 @@ export default {
         startedAt: null,
       },
       statusMatch: "default",
+      timer: 0,
     }
   },
   components: {
     MainScreen,
-    InteractScreen
+    InteractScreen,
+    ResultScreen,
+    CopyRightScreen,
   },
   methods: {
     onHandleBeforeStart(config) {
@@ -38,6 +44,12 @@ export default {
       this.settings.startedAt = new Date().getTime(); //get current time
       this.statusMatch = "match";
     },
+    onGetResult() {
+      //get result 
+      this.timer = new Date() - this.settings.startedAt;
+      //switch to result component
+      this.statusMatch = "result";
+    }
 
   }
 }
