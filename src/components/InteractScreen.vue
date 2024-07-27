@@ -69,7 +69,7 @@ export default {
             }
         },
         getImageUrl(card) {
-            return `src/assets/images/${card}.png`;
+            return `/assets/images/${card}.png`;
         }
     }
 };
