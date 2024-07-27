@@ -10,7 +10,7 @@
             </div>
             <div class="card__face card__face--back">
                 <div class="card__content" :style="{
-                    backgroundImage: `url(${imgBackFaceUrl})`,
+                    background: `url(${imgBackFaceUrl}) no-repeat center center`,
                 }
                     ">
                 </div>
