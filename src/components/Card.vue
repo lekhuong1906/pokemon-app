@@ -9,10 +9,8 @@
                 <div class="card__content"></div>
             </div>
             <div class="card__face card__face--back">
-                <div class="card__content" :style="{
-                    background: `url(${imgBackFaceUrl}) no-repeat center center`,
-                }
-                    ">
+                <div class="card__content" >
+                    <img class="card__content--img" :src="imgBackFaceUrl">
                 </div>
             </div>
         </div>
@@ -82,6 +80,11 @@ export default {
     transform-style: preserve-3d;
     cursor: pointer;
     position: relative;
+}
+
+.card__content--img {
+    width: 100%;
+    height: 100%;
 }
 
 .card__inner.is-flipped {
