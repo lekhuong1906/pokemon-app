@@ -103,7 +103,7 @@ export default {
 }
 
 .card__face--front .card__content {
-    background: url('../assets/images/icon_back.png') no-repeat center center;
+    background: url('/images/icon_back.png') no-repeat center center;
     background-size: 60%;
     height: 100%;
     width: 100%;
